@@ -7,6 +7,7 @@ mongoose.connect(URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const conecction = mongoose.connection;
