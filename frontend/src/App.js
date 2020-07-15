@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import CreateNote from "./components/CreateNote";
 import NoteList from "./components/NoteList";
 import CreateUser from "./components/CreateUser";
+import "./index.css";
 function App() {
   return (
     <Router>

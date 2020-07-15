@@ -53,21 +53,23 @@ export default class CreateUser extends Component {
           </div>
         </div>
         <div className="col-md-8">
-          <ul className="list-group">
+          <ul className="list-group ">
             {this.state.users.map((user) => (
-              <li
-                className="list-group-item list-group-item-action"
-                key={user._id}
-              >
-                {user.username}{" "}
+              <div className=" d-flex justify-content-end m-2">
+                <li
+                  className="list-group-item list-group-item-action "
+                  key={user._id}
+                >
+                  {user.username}{" "}
+                </li>
                 <button
                   key={user._id}
                   onClick={() => this.deleteUser(user._id)}
-                  className="btn btn-danger"
+                  className="btn btn-danger "
                 >
                   Delete
                 </button>
-              </li>
+              </div>
             ))}
           </ul>
         </div>
