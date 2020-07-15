@@ -5,7 +5,9 @@ export default class Navigation extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <Link className="navbar-brand">NotesApp</Link>
+          <Link className="navbar-brand" to="/">
+            NotesApp
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

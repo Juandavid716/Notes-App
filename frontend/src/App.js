@@ -9,10 +9,12 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Route path="/" exact component={NoteList} />
-      <Route path="/edit/:id" exact component={CreateNote} />
-      <Route path="/create" exact component={CreateNote} />
-      <Route path="/user" exact component={CreateUser} />
+      <div className="container p-4">
+        <Route path="/" exact component={NoteList} />
+        <Route path="/edit/:id" exact component={CreateNote} />
+        <Route path="/create" exact component={CreateNote} />
+        <Route path="/user" exact component={CreateUser} />
+      </div>
     </Router>
   );
 }
