@@ -9,14 +9,52 @@ export default class CreateNote extends Component {
     title: "",
     content: "",
     date: new Date(),
+    editing: false,
+    _id: "",
   };
   async componentDidMount() {
     const res = await axios.get("http://localhost:4000/api/users");
-    this.setState({ users: res.data });
+    this.setState({ users: res.data, userSelected: res.data[0].username });
+    // Crear o editar nota
+
+    if (this.props.match.params.id) {
+      const res = await axios.get(
+        "http://localhost:4000/api/notes/" + this.props.match.params.id
+      );
+      this.setState({
+        editing: true,
+        _id: this.props.match.params.id,
+        title: res.data.title,
+        content: res.data.content,
+        date: new Date(res.data.date),
+        userSelected: res.data.author,
+      });
+    }
   }
-  onSubmit = (e) => {
-    console.log(this.state.title, this.state.content);
+  onSubmit = async (e) => {
     e.preventDefault();
+    if (this.state.editing) {
+      const updatedNote = {
+        title: this.state.title,
+        content: this.state.content,
+        author: this.state.userSelected,
+        date: this.state.date,
+      };
+      await axios.put(
+        "http://localhost:4000/api/notes/" + this.state._id,
+        updatedNote
+      );
+    } else {
+      const newNote = {
+        title: this.state.title,
+        content: this.state.content,
+        dae: this.state.date,
+        author: this.state.userSelected,
+      };
+      await axios.post("http://localhost:4000/api/notes", newNote);
+    }
+
+    this.props.history.push("/");
   };
   onInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -37,6 +75,7 @@ export default class CreateNote extends Component {
                 className="form-control"
                 name="userSelected"
                 onChange={this.onInputChange}
+                value={this.userSelected}
               >
                 {this.state.users.map((user) => (
                   <option key={user._id}> {user.username}</option>
@@ -47,6 +86,7 @@ export default class CreateNote extends Component {
               <input
                 type="text"
                 name="title"
+                value={this.state.title}
                 className="form-control"
                 placeholder="title"
                 required
@@ -58,6 +98,7 @@ export default class CreateNote extends Component {
                 name="content"
                 className="form-control"
                 placeholder="content"
+                value={this.state.content}
                 onChange={this.onInputChange}
                 required
               ></textarea>
